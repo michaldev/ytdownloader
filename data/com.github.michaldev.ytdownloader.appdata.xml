@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2017 Allen B -->
+<component type="desktop">
+  <id>com.github.michaldev.ytdownloader</id>
+  <metadata_license>CC0</metadata_license>
+  <project_license>GPL-3.0+</project_license>
+  <name>YT Downloader</name>
+  <summary>Youtube Downloader for ElementaryOS.</summary>
+  <developer_name>Michał Rosiak</developer_name>
+  <screenshots>
+      <screenshot type="default">
+          <image>https://raw.githubusercontent.com/michaldev/ytdownloader/master/ss.png</image>
+      </screenshot>
+  </screenshots>
+  <description>
+    <p>Youtube Downloader for ElementaryOS.</p>
+  </description>
+  <url type="homepage">https://github.com/michaldev/ytdownloader</url>
+  <url type="bugtracker">https://github.com/michaldev/ytdownloader/issues/labels/bug</url>
+  <url type="help">https://github.com/michaldev/ytdownloader/issues/new</url>
+  <custom>
+     <value key="x-appcenter-color-primary">#FF0000</value>
+     <value key="x-appcenter-color-primary-text">#EEEDEC</value>
+  </custom>
+</component>

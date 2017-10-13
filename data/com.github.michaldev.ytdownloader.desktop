@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Youtube Downloader
+GenericName=YoutubeDownloader
+Comment=Youtube Downloader for Elementary OS
+Categories=Internet;
+Exec=com.github.michaldev.ytdownloader
+Icon=com.github.michaldev.ytdownloader
+Terminal=false
+Type=Application
+X-GNOME-Gettext-Domain=com.github.michaldev.ytdownloader
+Keywords=Youtube;
