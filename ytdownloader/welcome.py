@@ -6,7 +6,7 @@ gi.require_version('Gtk', '3.0')
 gi.require_version('Granite', '1.0')
 from gi.repository import Gtk, Gdk, Granite
 
-from dialog import LightWindow
+from open import LightWindow
 
 
 class Welcome(Gtk.Box):
@@ -16,22 +16,22 @@ class Welcome(Gtk.Box):
 
     def __init__(self):
         Gtk.Box.__init__(self, False, 0)
+        self.light = LightWindow()
 
         self.settings.set_property("gtk-application-prefer-dark-theme", True)
 
         # Create welcome widget
-        welcome = Granite.WidgetsWelcome()
-        welcome = welcome.new("Welcome", "What do you want to do?")
+        self.welcome = Granite.WidgetsWelcome()
+        self.welcome = self.welcome.new("Welcome", "What do you want to do?")
 
         # Welcome voices
-        welcome.append("folder-videos", "Open", "Open Video or Playlist")
+        self.welcome.append("folder-videos", "Open", "Open Video or Playlist")
 
-        welcome.connect("activated", self.on_welcome_activated)
+        self.welcome.connect("activated", self.on_welcome_activated)
 
-        self.add(welcome)
+        self.add(self.welcome)
 
     def on_welcome_activated(self, widget, index):
         if index == 0:
-            light = LightWindow(title="abc")
-            light.show()
+            self.light.run()
             
