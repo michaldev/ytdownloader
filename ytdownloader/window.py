@@ -38,7 +38,13 @@ class Window(Gtk.Window):
                 self.light.hide()
                 self.video_window = Video()
                 self.video_window.video_title.set_text(video.title)
-                self.video_window.video_description.set_text(video.description)
+                self.video_window.video_description.set_text(video.description[:160])
+                for obj in video.audiostreams:
+                    self.video_window.audio_store.append([str(obj)])
+
+                for obj in video.videostreams:
+                    self.video_window.video_store.append([str(obj)])
+
                 self.add(self.video_window)
 
                 response=requests.get(video.bigthumb)
