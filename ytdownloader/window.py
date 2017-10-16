@@ -38,7 +38,8 @@ class Window(Gtk.Window):
                 self.light.hide()
                 self.video_window = Video()
                 self.video_window.video_title.set_text(video.title)
-                self.video_window.video_description.set_text(video.description[:160])
+                self.video_window.video_description_label.set_text(video.description)
+                self.video_window.video_author_label.set_text(video.author)
                 for obj in video.audiostreams:
                     self.video_window.audio_store.append([str(obj)])
 
