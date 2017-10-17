@@ -14,6 +14,9 @@ class Video(Gtk.HBox):
 
     def __init__(self):
         Gtk.Box.__init__(self, False, 0)
+
+        self.video = None
+
         self.left_vbox = Gtk.VBox()
         self.image = Gtk.Image()
         self.video_title = Gtk.Label("Video Title")
@@ -47,6 +50,7 @@ class Video(Gtk.HBox):
         self.audio_vbox.pack_start(self.download_audio_button, False, False, 10)
 
         self.download_video_button = Gtk.Button("Download video")
+
         self.video_store = Gtk.ListStore(str)
         self.video_combobox = Gtk.ComboBox.new_with_model(self.video_store)
         self.video_combobox.set_active(0)
@@ -63,4 +67,7 @@ class Video(Gtk.HBox):
         self.right_vbox.pack_start(self.formats_hbox, False, False, 10)
         self.pack_start(self.right_vbox, True, True, 5)
         self.show_all()
+
+
+        
 

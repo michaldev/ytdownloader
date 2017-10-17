@@ -12,7 +12,6 @@ class LightWindow(Gtk.Dialog):
              
         type_store = Gtk.ListStore(str)
         type_store.append(["Video"])
-        type_store.append(["Playlist"])
         self.combobox = Gtk.ComboBox.new_with_model(type_store)
         self.combobox.set_active(0)
 
