@@ -25,17 +25,24 @@ class Window(Gtk.Window):
 
         self.hbar = hb.Headerbar()
         self.hbar.hbar_download.connect("clicked", self.open_download_screen)
+        self.hbar.hbar_settings.connect("clicked", self.open_settings_popup)
 
         self.set_titlebar(self.hbar)
         
         self.video_window = Video()
-        self.video_window.download_video_button.connect("clicked", self.add_to_download_section)
+        self.video_window.download_video_button.connect("clicked", self.add_to_download_section, "video")
+        self.video_window.download_audio_button.connect("clicked", self.add_to_download_section, "audio")       
 
         self.welcome = wl.Welcome()
         self.open_popup = self.welcome.light
         self.open_popup.get_button.connect("clicked", self.open_click)
 
         self.add(self.welcome)
+
+    def open_settings_popup(self, widget):
+        from settings import SettingsPopup
+        settings_popup = SettingsPopup()
+        settings_popup.show()
 
     def open_download_screen(self, widget=None):
         if self.get_child() == self.download_screen:
@@ -59,21 +66,32 @@ class Window(Gtk.Window):
         self.open_popup.vbox.pack_start(self.progressbar, True, True, 10)
         self.open_popup.vbox.show()
         self.progressbar.start()
-
+        #import threading
+        #th = threading.Thread(target=self.get_video)
+        #th.start()
         self.get_video()
 
     def mycb(self, total, recvd, ratio, rate, eta):
         self.download_progressbar.set_fraction(ratio)
 
     def download_video(self):
-        self.video_window.video.videostreams[self.video_window.video_combobox.get_active()].download(quiet=True, callback=self.mycb)
+        if self.media_type == "video":
+            self.video_window.video.videostreams[self.video_window.video_combobox.get_active()].download(quiet=True, callback=self.mycb)
+        elif self.media_type == "audio":
+            self.video_window.video.audiostreams[self.video_window.audio_combobox.get_active()].download(quiet=True, callback=self.mycb)
 
-    def add_to_download_section(self, widget):
+    def add_to_download_section(self, widget, media_type):
+        self.media_type = media_type
         self.download_hbox = Gtk.HBox()
+ 
+        if self.media_type == "audio":
+            self.media_type_name = "Audio"
+        elif self.media_type == "video":
+            self.media_type_name = "Video"
 
         self.image = Gtk.Image()
         
-        self.download_label = Gtk.Label(self.video_window.video.title)
+        self.download_label = Gtk.Label(self.video_window.video.title+" | "+self.media_type_name)
         self.download_progressbar = Gtk.ProgressBar()
 
         response=requests.get(self.video_window.video.thumb)
@@ -86,7 +104,7 @@ class Window(Gtk.Window):
         self.download_vbox.pack_start(self.download_label, False, False, 5)
         self.download_vbox.pack_start(self.download_progressbar, False, False, 5)
 
-        self.download_hbox.pack_start(self.download_vbox, False, False, 5)
+        self.download_hbox.pack_start(self.download_vbox, True, True, 10)
 
         self.download_screen.pack_start(self.download_hbox, False, False, 5)
         self.download_screen.show_all()

@@ -68,6 +68,5 @@ class Video(Gtk.HBox):
         self.pack_start(self.right_vbox, True, True, 5)
         self.show_all()
 
-
         
 
