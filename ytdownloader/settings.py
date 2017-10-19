@@ -10,10 +10,15 @@ class SettingsPopup(Gtk.Dialog):
         self.set_resizable(False)
         self.connect("destroy", self.close)
 
+        self.location_label = Gtk.Label("Choose download location")
+        self.file = Gtk.FileChooserButton("Select")
         self.save_button = Gtk.Button("Save")
 
+        self.vbox.pack_start(self.location_label, False, False, 10)
+        self.vbox.pack_start(self.file, False, False, 10)
         self.vbox.pack_start(self.save_button, False, False, 10)
         self.vbox.show_all()
+
 
     def close(self, widget):
         print("TEST")
