@@ -3,6 +3,8 @@ import gi
 import pafy
 import requests
 import threading
+import json
+import os
 
 from datetime import datetime
 from gi.repository import Gtk, Gdk, Gio, GdkPixbuf, GLib
@@ -20,6 +22,7 @@ class Window(Gtk.Window):
     def __init__(self):
         Gtk.Window.__init__(self, title="YT Downloader")
         self.current = None
+        self.data = None
 
         self.download_screen = Downloads()
 
@@ -38,6 +41,23 @@ class Window(Gtk.Window):
         self.open_popup.get_button.connect("clicked", self.open_click)
 
         self.add(self.welcome)
+        self.load_config()
+
+    def load_config(self):
+        home_directory = os.path.expanduser("~")
+        path = os.path.join(home_directory, ".ytdownloader.json")
+
+        if os.path.isfile(path):
+            with open(path) as data_file:    
+                self.data = json.load(data_file)
+        else:
+            temp_download_dir = os.path.join(home_directory, "ytdownloader")
+            if os.path.isdir(temp_download_dir) is False:
+                os.makedirs(temp_download_dir)
+            self.data = {"download_path": temp_download_dir}
+            with open(path, 'w') as outfile:
+                json.dump(self.data, outfile)
+        return self.data
 
     def open_settings_popup(self, widget):
         from settings import SettingsPopup
