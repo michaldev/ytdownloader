@@ -20,8 +20,8 @@ class SettingsPopup(Gtk.Dialog):
         self.set_resizable(False)
         self.connect("destroy", self.close)
 
-        self.location_label = Gtk.Label("Choose download location")
-        self.file = Gtk.Button("Choose Folder")
+        self.location_label = Gtk.Label(self.load_config()['download_path'])
+        self.file = Gtk.Button("Change download folder")
         self.file.connect("clicked", self.on_folder_clicked)
         self.save_button = Gtk.Button("Save")
         self.save_button.connect("clicked", self.save)
@@ -35,7 +35,7 @@ class SettingsPopup(Gtk.Dialog):
         if os.path.isfile(path):
             with open(path) as data_file:    
                 self.data = json.load(data_file)
-        return self.data
+        return dict(self.data)
 
     def save_config(self, data):
         with open(path, 'w') as outfile:

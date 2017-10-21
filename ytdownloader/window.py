@@ -22,9 +22,10 @@ class Window(Gtk.Window):
     def __init__(self):
         Gtk.Window.__init__(self, title="YT Downloader")
         self.current = None
-        self.data = None
+        self.data = self.load_config()
 
         self.download_screen = Downloads()
+        self.download_screen.open_folder_button.connect("clicked", self.open_folder)
 
         self.hbar = hb.Headerbar()
         self.hbar.hbar_download.connect("clicked", self.open_download_screen)
@@ -41,7 +42,9 @@ class Window(Gtk.Window):
         self.open_popup.get_button.connect("clicked", self.open_click)
 
         self.add(self.welcome)
-        self.load_config()
+
+    def open_folder(self, widget):
+        os.system("pantheon-files "+self.data['download_path'])
 
     def load_config(self):
         home_directory = os.path.expanduser("~")
@@ -96,9 +99,9 @@ class Window(Gtk.Window):
 
     def download_video(self):
         if self.media_type == "video":
-            self.video_window.video.videostreams[self.video_window.video_combobox.get_active()].download(quiet=True, callback=self.mycb)
+            self.video_window.video.videostreams[self.video_window.video_combobox.get_active()].download(filepath=self.data['download_path'], quiet=True, callback=self.mycb)
         elif self.media_type == "audio":
-            self.video_window.video.audiostreams[self.video_window.audio_combobox.get_active()].download(quiet=True, callback=self.mycb)
+            self.video_window.video.audiostreams[self.video_window.audio_combobox.get_active()].download(filepath=self.data['download_path'], quiet=True, callback=self.mycb)
 
     def add_to_download_section(self, widget, media_type):
         self.media_type = media_type

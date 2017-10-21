@@ -15,6 +15,9 @@ class Downloads(Gtk.VBox):
     def __init__(self):
         Gtk.Box.__init__(self, False, 0)
         
+        self.open_folder_button = Gtk.Button("Open download folder")
+        self.pack_end(self.open_folder_button, False, False, 0)
+        
 
         
 
